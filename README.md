@@ -16,3 +16,6 @@ php code audit for cms vulnerabilities
 - [ ] phpcmsv9.6.0 文件上传漏洞
 - [ ] phpcmsv9.6.2 sqli注入漏洞
 - [ ] phpcmsv9.6.2 文件上传漏洞
+
+### typecho 
+- [x] typecho 前台反序列化getshell
