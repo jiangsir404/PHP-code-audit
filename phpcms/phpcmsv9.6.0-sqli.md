@@ -252,6 +252,12 @@ if __name__ == '__main__':
 
 拿到password和salt后就可以去md5上面解密了，类型选择dz,格式 password:salt
 
+
+## 修复方案
+
+![](1.png)
+在v9.6.1中的修复方案是对$a_k过滤，对$id,$modelid,$catid 都用了intval函数
+
 参考文章： 
 https://paper.seebug.org/275/
 http://www.venenof.com/index.php/archives/347/
