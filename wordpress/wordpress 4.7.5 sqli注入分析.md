@@ -3,7 +3,7 @@
 
 跟踪调试文件， 先来到upload.php 删除图片的地方：
 
-```
+```php
 case 'delete':
 	if ( !isset( $post_ids ) )
 		break;
@@ -28,7 +28,7 @@ case 'delete':
     delete_metadata( 'post', null, '_thumbnail_id', $post_id, true );
 漏洞触发点主要在wp-includes/meta.php 的 delete_metadata函数里面， 有如下代码:
 
-```
+```php
 if ( $delete_all ) {
 	$value_clause = '';
 	if ( '' !== $meta_value && null !== $meta_value && false !== $meta_value ) {
@@ -52,7 +52,7 @@ if ( $delete_all ) {
 
 拼接的参数同样调用了prepare函数，我们来看下prepare函数:
 
-```
+```php
 public function prepare( $query, $args ) {
 	if ( is_null( $query ) )
 		return;
@@ -82,7 +82,7 @@ public function prepare( $query, $args ) {
 
 我们来看下sprintf(vsprintf同sprintf)函数的语法
 
-```
+```php
 <?php
 $s = 'monkey';
 $t = 'many monkeys';
@@ -134,7 +134,7 @@ vprintf/printf还有一个更加严重的问题，对格式化的字符类型没
 
 翻看源码, `ext/standard/formatted_print.c`
 
-```
+```php
 switch (format[inpos]) {
 	case 's': {
 		zend_string *t;
@@ -223,7 +223,8 @@ switch (format[inpos]) {
 
 
 没做字符类型检测的最大危害就是它可以吃掉一个转义符`\`,  如果%后面出现一个`\`,那么php会把`\`当作一个格式化字符的类型而吃掉`\`,  最后`%\`（或`%1$\`）被替换为空
-```
+
+```php
 <?php
 
 $input = addslashes("%1$' and 1=1#");
@@ -260,7 +261,7 @@ select * from t where a='admin' AND b='' and 1=1#'
 
 在wordpress4.7.6的修复中是这样的，prepare函数;
 
-```
+```php
 $query = str_replace( "'%s'", '%s', $query ); // in case someone mistakenly already singlequoted it
 $query = str_replace( '"%s"', '%s', $query ); // doublequote unquoting
 $query = preg_replace( '|(?<!%)%f|' , '%F', $query ); // Force floats to be locale unaware
@@ -276,7 +277,7 @@ return @vsprintf( $query, $args );
 
 然而补丁是可以被绕过的, 补丁的思路是正确的， 然而官方只是修复了格式化字类型没有检测的错误，用白名单对字符类型进行过滤， 却并没有修复prepare两次格式化字符串的漏洞，导致补丁可以进一步被绕过，  如下demo:
 
-```
+```php
 function prepare($query,$args){
 	$query = str_replace( "'%s'", '%s', $query );
 	$query = preg_replace( '|(?<!%)%s|', "'%s'", $query );
@@ -307,7 +308,7 @@ meta_value 只是传入一个简单的` %s `,(注意前后两个空格,否则无
 
 在wordpress 4.7.7中已经修复了该问题, 补丁如下。 
 
-```
+```php
 $allowed_format = '(?:[1-9][0-9]*[$])?[-+0-9]*(?: |0|\'.)?[-+0-9]*(?:\.[0-9]+)?';
 
 $query = str_replace( "'%s'", '%s', $query ); // Strip any existing single quotes.

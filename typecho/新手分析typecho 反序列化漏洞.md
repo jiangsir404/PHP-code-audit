@@ -1,5 +1,5 @@
 在`install.php`中存在下面这段代码
-```
+```php
 <?php else : ?>
     <?php
     $config = unserialize(base64_decode(Typecho_Cookie::get('__typecho_config')));
@@ -19,7 +19,7 @@
 
 这段话将`$adapterName`属性和字符串拼接在一块，会自动调用`__toString`魔术方法，我们只需要传入一个数组，让adapter值为一个有`__toString`方法的类即可,我们来找找有那些类有`__toString` 函数
 
-```
+```php
 /home/T00LS/database/html/cms安装包/大型cms/typecho/1.0.14/build/var/Typecho/Config.php:
   192       * @return string
   193       */
@@ -47,7 +47,7 @@
 主要有三处，　第一出Config.php的`__toString` 函数中是一个序列化方法，　第二处Query.php文件是一个构造查询语句的过程, 第三处在Feed.php中构造Feed输出的内容，　仔细观察发现这三个魔术方法中都没有调用一些危险函数, 这个时候我们需要继续构造pop链，直到找到一些危险函数
 
 第三处的`__toString`函数里简要逻辑如下:
-```
+```php
     public function __toString()
     {
 
@@ -87,7 +87,7 @@
 
 我们全局搜索`__get`函数，一共有七处，其他几处可以自己去看看，这里直接来到`Typecho_request.php文件处
 
-```
+```php
     public function __get($key)
     {
         return $this->get($key);
@@ -117,7 +117,7 @@
 
 get方法主要通过key值获取`$this->_params`中键的值, 接着调用了`_applyFilter`方法
 
-```
+```php
 private function _applyFilter($value)
 {
     if ($this->_filter) {
@@ -134,7 +134,7 @@ private function _applyFilter($value)
 ```
 到这一步，我们可以看到`array_map`和`call_user_func`均可造成任意代码执行, 且`_filter`和`$value`变量都可控，　回顾整个pop链 , 我们开始构造我们的poc
 
-```
+```php
 <?php 
 
 class Typecho_Feed{
@@ -196,7 +196,7 @@ https://paper.seebug.org/424/
 
 
 exp:
-```
+```php
 import requests
 
 def poc(url):
