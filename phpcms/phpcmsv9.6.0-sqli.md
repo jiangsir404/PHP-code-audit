@@ -252,3 +252,6 @@ if __name__ == '__main__':
 
 拿到password和salt后就可以去md5上面解密了，类型选择dz,格式 password:salt
 
+参考文章： 
+https://paper.seebug.org/275/
+http://www.venenof.com/index.php/archives/347/
