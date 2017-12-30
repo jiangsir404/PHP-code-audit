@@ -1,4 +1,4 @@
-phpcms 四月份左右同sql注入漏洞一同，爆出了一个任意文件上传漏洞，漏洞利用比较简单，危害很大，可以直接前台getshell.  这里来一块分析一下。
+phpcms 四月份左右和sql注入漏洞一同，爆出了一个任意文件上传漏洞，漏洞利用比较简单，危害很大，可以直接前台getshell.  这里来一块分析一下。
 
 漏洞利用点是注册的地方，我们来看一下常见的一个payload:
 
@@ -294,6 +294,7 @@ if(pc_base::load_config('system', 'phpsso')) {
 几个小于0的状态码都是因为用户名和邮箱，所以在 payload 中用户名和邮箱要尽量随机。
 
 另外在 phpsso 没有配置好的时候$status的值为空，也同样不能得到路径。 这个时候程序会报错为:`operation_failure`
+![image.png](http://upload-images.jianshu.io/upload_images/2159605-2dab46eefe45f7c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 2.  在无法得到路径的情况下我们只能爆破了， 文件名生成的方法为:
@@ -307,10 +308,16 @@ function getname($fileext){
 因为我们只需要爆破rand(100,999)即可，很容易爆破出来文件名
 
 
+## 补丁
+在phpcms9.6.1中修复了该漏洞，修复方案就是对用fileext获取到的文件后缀再用黑白名单分别过滤一次。
+![image.png](http://upload-images.jianshu.io/upload_images/2159605-f61e0d45b0b6e9a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+
 
 exp:
 
-```python
+```
 import re
 import requests
 import random
