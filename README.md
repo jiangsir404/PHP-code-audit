@@ -1,7 +1,7 @@
 # PHP-code-audit
 php code audit for cms vulnerabilities
 
-> 记录自己对一些cms漏洞的审计学习， 欢迎师傅们带我上车
+> 记录自己对一些cms漏洞的审计学习， 欢迎师傅们star支持下, 持续更新中。
 
 
 ### seacms
