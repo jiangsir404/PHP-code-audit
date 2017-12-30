@@ -13,7 +13,7 @@ php code audit for cms vulnerabilities
 ### phpcms
 
 - [x] [phpcmsv9.6.0 sqli注入漏洞](https://github.com/jiangsir404/PHP-code-audit/blob/master/phpcms/phpcmsv9.6.0-sqli.md)
-- [ ] phpcmsv9.6.0 文件上传漏洞
+- [x] phpcmsv9.6.0 文件上传漏洞(https://github.com/jiangsir404/PHP-code-audit/blob/master/phpcms/phpcmsv9.6.0-sqli.md)
 - [ ] phpcmsv9.6.2 sqli注入漏洞
 - [ ] phpcmsv9.6.2 文件上传漏洞
 
