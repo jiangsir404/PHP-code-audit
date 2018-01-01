@@ -272,3 +272,4 @@ PHPSESSID=7614jvu7e2hp7uemoioldco8c3;  zxtgv_siteid=75614CKDLhilVlQxGX06IK1FTqZn
 
 siteid和userid都设为1, 然后用auth_key加密下即可得到。
 
+参考文章: http://0day5.com/archives/4396/
