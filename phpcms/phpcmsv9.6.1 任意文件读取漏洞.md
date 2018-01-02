@@ -3,7 +3,7 @@ phpcms v9.6.1 爆出的任意文件读取漏洞， 来一起分析以下，这�
 
 我们定位到漏洞函数`/phpcms/modules/content/down.php` Line 103-127
 
-```
+```php
 public function download() {
 	$a_k = trim($_GET['a_k']);
 	$pc_auth_key = md5(pc_base::load_config('system','auth_key').$_SERVER['HTTP_USER_AGENT'].'down');
@@ -54,7 +54,7 @@ public function download() {
 
 和文件名有关的参数是$s,$f。 这两个参数都是通过parse_str解析变量得到，然后程序对$f参数过滤，过滤规则如下：
 
-```
+```php
 if(preg_match('/(php|phtml|php3|php4|jsp|dll|asp|cer|asa|shtml|shtm|aspx|asax|cgi|fcgi|pl)(\.|$)/i',$f) || strpos($f, ":\\")!==FALSE || strpos($f,'..')!==FALSE) showmessage(L('url_error'));
 $fileurl = trim($f);
 ```
@@ -66,7 +66,7 @@ $fileurl = trim($f);
 
 再把拼接后的文件名过滤一次，程序继续运行，来到最关键的一步:
 
-```
+```php
 $fileurl = str_replace(array('<','>'), '',$fileurl);
 file_down($fileurl, $filename);
 ```
@@ -88,11 +88,15 @@ $f 的取值为`p%3%252%2*70C` --safe_replace->  `p%3%252%270C` --safe_replace--
 
 最后和$s拼接就拼接出来了php，绕过了正则了， 过程也是比较复杂， 但payload构造骚，值得学习。
 
+### 补丁分析
+phpcms v9.6.3 修复了该漏洞, 就是在用str_replace函数去掉括号后再用正则过滤了一次。
+
+![image.png](http://upload-images.jianshu.io/upload_images/2159605-26b7ab50da1fdc02.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 写了一个读取system.php配置文件的exp:
 
-```
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
