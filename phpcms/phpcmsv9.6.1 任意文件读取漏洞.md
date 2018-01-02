@@ -84,7 +84,7 @@ payload 如下:
 放入src参数中，解后的`$s=./phpcms/modules/content/down.ph`, $f=p%3%252%2*70C
 
 
-$f 的取值为`p%3%252%2*70C` --safe_replace->  `p%3%252%270C` --safe_replace--> `p%3%2520C` --parse_str--> `p%3%20C`  --safe_replace-->`p%3C`  --> `p<`  --str_replace-->`p`
+$f 的取值为`p%3%252%2*70C` --safe_replace->  `p%3%252%270C` --safe_replace--> `p%3%2520C` --parse_str--> `p%3%20C`  --safe_replace-->`p%3C`  --parse_str--> `p<`  --str_replace-->`p`
 
 最后和$s拼接就拼接出来了php，绕过了正则了， 过程也是比较复杂， 但payload构造骚，值得学习。
 
