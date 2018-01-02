@@ -15,7 +15,7 @@ php code audit for cms vulnerabilities
 - [x] [phpcmsv9.6.0 sqli注入漏洞](https://github.com/jiangsir404/PHP-code-audit/blob/master/phpcms/phpcmsv9.6.0-sqli.md)
 - [x] [phpcmsv9.6.0 文件上传漏洞](https://github.com/jiangsir404/PHP-code-audit/blob/master/phpcms/phpcmsv9.6.0%20%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E.md)
 - [x] [phpcmsv9.6.2 sqli注入漏洞](https://github.com/jiangsir404/PHP-code-audit/blob/master/phpcms/phpcms%20v9.6.2%20sqli%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90.md)
-- [ ] phpcmsv9.6.2 文件上传漏洞
+- [x] [phpcmsv9.6.1 文件读取漏洞](https://github.com/jiangsir404/PHP-code-audit/blob/master/phpcms/phpcmsv9.6.1%20%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E.md)
 
 ### typecho 
 - [x] [typecho 前台反序列化getshell](https://github.com/jiangsir404/PHP-code-audit/blob/master/typecho/%E6%96%B0%E6%89%8B%E5%88%86%E6%9E%90typecho%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E.md)
