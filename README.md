@@ -19,3 +19,8 @@ php code audit for cms vulnerabilities
 
 ### typecho 
 - [x] [typecho 前台反序列化getshell](https://github.com/jiangsir404/PHP-code-audit/blob/master/typecho/%E6%96%B0%E6%89%8B%E5%88%86%E6%9E%90typecho%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E.md)
+
+
+### DedeCms
+
+- [ ]DedeCms v5.7.72任意用户密码重置漏洞
