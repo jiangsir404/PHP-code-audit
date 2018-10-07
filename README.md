@@ -25,6 +25,6 @@ php code audit for cms vulnerabilities
 
 - [ ]DedeCms v5.7.72任意用户密码重置漏洞
 
-### 其他
-- [x] PHPmailer 命令执行漏洞(<=5.2.19)
-- [x] PHPmailer 任意文件读取(<=5.2.21)
+### PHPmailer
+- [x] [PHPmailer 命令执行漏洞(<=5.2.19)](https://github.com/jiangsir404/PHP-code-audit/blob/master/PHPmailer/PHPmailer%20%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E.md)
+- [x] [PHPmailer 任意文件读取(<=5.2.21)](https://github.com/jiangsir404/PHP-code-audit/blob/master/PHPmailer/PHPmailer%20%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E.md)
