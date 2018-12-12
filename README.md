@@ -28,3 +28,11 @@ php code audit for cms vulnerabilities
 ### PHPmailer
 - [x] [PHPmailer 命令执行漏洞(<=5.2.19)](https://github.com/jiangsir404/PHP-code-audit/blob/master/PHPmailer/PHPmailer%20%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E.md)
 - [x] [PHPmailer 任意文件读取(<=5.2.21)](https://github.com/jiangsir404/PHP-code-audit/blob/master/PHPmailer/PHPmailer%20%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E.md)
+
+### thinkphp
+- [x] Thinkphp5.0.x rce漏洞分析
+- [x] Thinkphp5.1.x rce漏洞分析
+- [x] ThinkPHP 框架安全性分析
+
+### Yii
+- [x] Yii框架findOne fineAll 注入分析( CVE-2018-7269)
