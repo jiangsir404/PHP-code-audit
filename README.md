@@ -30,9 +30,9 @@ php code audit for cms vulnerabilities
 - [x] [PHPmailer 任意文件读取(<=5.2.21)](https://github.com/jiangsir404/PHP-code-audit/blob/master/PHPmailer/PHPmailer%20%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E.md)
 
 ### thinkphp
-- [x] Thinkphp5.0.x rce漏洞分析
-- [x] Thinkphp5.1.x rce漏洞分析
-- [x] ThinkPHP 框架安全性分析
+- [x] [Thinkphp5.0.x rce漏洞分析](https://github.com/jiangsir404/PHP-code-audit/blob/master/thinkphp/Thinkphp5.0.x%20rce%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90.pdf)
+- [x] [Thinkphp5.1.x rce漏洞分析](https://github.com/jiangsir404/PHP-code-audit/blob/master/thinkphp/Thinkphp5.1.x%20rce%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90.pdf)
+- [x] [ThinkPHP 框架安全性分析](https://github.com/jiangsir404/PHP-code-audit/blob/master/thinkphp/ThinkPHP%20%E6%A1%86%E6%9E%B6%E5%AE%89%E5%85%A8%E5%9E%8B%E5%88%86%E6%9E%90.pdf)
 
 ### Yii
-- [x] Yii框架findOne fineAll 注入分析( CVE-2018-7269)
+- [x] [Yii框架findOne fineAll 注入分析( CVE-2018-7269)](https://github.com/jiangsir404/PHP-code-audit/blob/master/yii/Yii%E6%A1%86%E6%9E%B6findOne%20fineAll%20%E6%B3%A8%E5%85%A5%E5%88%86%E6%9E%90(%20CVE-2018-7269).pdf)
